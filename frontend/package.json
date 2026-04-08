@@ -10,6 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@deck.gl/aggregation-layers": "^9.2.11",
+    "@deck.gl/core": "^9.2.11",
+    "@deck.gl/extensions": "^9.2.11",
+    "@deck.gl/geo-layers": "^9.2.11",
+    "@deck.gl/layers": "^9.2.11",
+    "@deck.gl/mesh-layers": "^9.2.11",
+    "@deck.gl/react": "^9.2.11",
     "axios": "^1.8.1",
     "deck.gl": "^9.0.0",
     "framer-motion": "^12.4.10",
