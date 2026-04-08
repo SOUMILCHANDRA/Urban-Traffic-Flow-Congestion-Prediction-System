@@ -1,5 +1,7 @@
 # 👁️ GOD'S EYE | TRANSIT INTELLIGENCE CORE
 
+![God's Eye Dashboard](./dashboard.png)
+
 ![Status](https://img.shields.io/badge/Neural--Link-Active-00f2ff)
 ![Tech Stack](https://img.shields.io/badge/Engine-MapLibre%20%7C%20Deck.gl-ff0055)
 ![Platform](https://img.shields.io/badge/Control--Room-v2.0-blueviolet)
