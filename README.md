@@ -1,5 +1,7 @@
 # 👁️ GOD'S EYE | TRANSIT INTELLIGENCE CORE
 
+**Live Dashboard:** [trafficeye-pulse-matrix.onrender.com](https://trafficeye-pulse-matrix.onrender.com/)
+
 ![God's Eye Dashboard](./dashboard.png)
 
 ![Status](https://img.shields.io/badge/Neural--Link-Active-00f2ff)
