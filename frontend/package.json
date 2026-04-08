@@ -18,7 +18,7 @@
     "@deck.gl/mesh-layers": "^9.2.11",
     "@deck.gl/react": "^9.2.11",
     "axios": "^1.8.1",
-    "deck.gl": "^9.0.0",
+    "deck.gl": "^9.2.11",
     "framer-motion": "^12.4.10",
     "lucide-react": "^0.479.0",
     "mapbox-gl": "^3.0.0",
