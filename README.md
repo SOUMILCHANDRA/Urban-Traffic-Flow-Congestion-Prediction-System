@@ -8,56 +8,97 @@
 ![Tech Stack](https://img.shields.io/badge/Engine-MapLibre%20%7C%20Deck.gl-ff0055)
 ![Platform](https://img.shields.io/badge/Control--Room-v2.0-blueviolet)
 
-**God's Eye** is a high-performance, cyber-aesthetic traffic visualization and predictive intelligence suite. Built for the Pune metropolitan region, it provides a "Mission Control" experience for urban flow analysis, leveraging GPU-accelerated rendering and machine learning.
+# 🚦 Urban Traffic Flow & Congestion Prediction System
+
+A data-driven urban intelligence system designed to analyze, predict, and visualize traffic congestion patterns in real time.
 
 ---
 
-## 🌌 The Vision
-Transforming raw traffic data into actionable spatial intelligence. God's Eye uses a tech-noir aesthetic combined with professional-grade data layers to visualize the heartbeat of the city.
+## 🚀 Problem
 
-### 🚀 Core Intelligence
-- **🦾 Cyber HUD Interface**: A custom-built mission control dashboard using glassmorphism, scanline overlays, and neon neon-glow accents.
-- **🛸 Neural Predictor**: Real-time traffic forecasting using a **Random Forest Regressor** to scan municipal sectors for future bottlenecks.
-- **🔥 Kinetic Flow Visualization**: High-performance `TripsLayer` rendering with additive blending for soul-like neon vehicle trails.
-- **🛰️ Temporal Matrix**: Scrub through time using a unified temporal slider to see past trends and future AI-generated projections.
-- **🔀 Dynamic Diversion Engine**: Real-time logic for calculating delta values between primary and alternative transit routes.
+Urban areas face severe traffic congestion due to increasing vehicle density and lack of predictive infrastructure. Most systems react to traffic rather than anticipate it.
 
 ---
 
-## 🛠️ Technical Architecture
+## 💡 Solution
 
-- **Map Engine**: **MapLibre GL** (Token-free, open-source high-performance rendering).
-- **Visualization**: **Deck.gl v9** (GPU-accelerated layers for millions of data points).
-- **Frontend**: React (Vite 8.0), Framer Motion (Adaptive animations), Lucide (HUD icons).
-- **Backend**: FastAPI (Python 3.10+), Scikit-Learn (Predictive models), Pandas (Data pipelines).
+This project uses **machine learning + data visualization** to predict congestion trends and present them through an interactive dashboard for better decision-making.
 
 ---
 
-## 🚀 Deployment Strategy (Render)
+## 🧠 Key Features
 
-The **God's Eye** platform is optimized for deployment on **Render's Free Tier** using a distributed full-stack architecture.
-
-### ⚙️ Multi-Service Structure
-1.  **Neural Backend**: Hosted as a **Render Web Service** (FastAPI).
-2.  **Control Interface**: Hosted as a **Render Static Site** (React/Vite).
-
-### 🌐 Live Configuration
-- **Backend URL**: Set as `VITE_API_URL` environment variable in the Static Site settings.
-- **Auto-Sync**: Push to `main` to trigger automated builds for both services.
-
-> [!NOTE]
-> **Performance Disclosure:**
-> Successfully deployed using Render’s free tier. Note that the free "Web Service" may experience a short delay during first load (cold start) after periods of inactivity. This is expected behavior for free-tier infrastructure but is more than functional for portfolio demonstrations.
-
-> [!TIP]
-> **Technical Interview Pro-Tip:**
-> "The system utilizes a decoupled architecture where the high-performance visualization layer is served via an optimized Static Site, while the heavy-lifting ML inference is handled by a separate FastAPI microservice. This ensures the dashboard remains responsive even during complex backend computations."
+* 📊 Traffic congestion prediction using ML models
+* 🗺️ Visual dashboard for traffic flow analysis
+* ⏱️ Time-based trend forecasting
+* 📈 Data-driven insights for urban planning
 
 ---
 
-### 📡 Data Source
-Simulated via a stochastic urban mobility generator, mirroring Pune's topology and traffic density patterns. No API keys required.
+## 🏗️ System Architecture
+
+* **Frontend:** React dashboard
+* **Backend:** Python (Flask / FastAPI)
+* **ML Models:** Regression / time-series prediction
+* **Data Processing:** Pandas, NumPy
 
 ---
-**OPERATIONAL STATUS: READY**
-*Developed by SOUMIL CHANDRA *
+
+## ⚙️ How It Works
+
+1. Traffic data is collected (historical or simulated)
+2. Data is cleaned and processed
+3. ML model predicts congestion levels
+4. Results are visualized on a dashboard
+
+---
+
+## 📊 Results
+
+* Improved congestion prediction accuracy
+* Ability to identify peak traffic hours
+* Insight into traffic flow patterns
+
+*(Add real metrics if possible — accuracy %, dataset size, etc.)*
+
+---
+
+## 🌍 Use Cases
+
+* Smart city infrastructure
+* Traffic management systems
+* Urban planning and analysis
+* Real-time congestion monitoring
+
+---
+
+## 🔮 Future Improvements
+
+* Integration with live traffic APIs
+* Real-time data streaming
+* AI-based traffic signal optimization
+* Geographic map integration
+
+---
+
+## 🌐 Demo
+
+> (Add deployment link if available)
+
+---
+
+## 📦 Installation
+
+```bash
+git clone https://github.com/SOUMILCHANDRA/Urban-Traffic-Flow-Congestion-Prediction-System
+cd Urban-Traffic-Flow-Congestion-Prediction-System
+pip install -r requirements.txt
+python app.py
+```
+
+---
+
+## 👤 Author
+
+Soumil Chandra
+Full Stack & Data Visualization Engineer
