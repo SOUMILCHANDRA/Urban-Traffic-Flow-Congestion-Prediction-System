@@ -25,9 +25,9 @@ const App: React.FC = () => {
     const fetchData = async () => {
       try {
         const [tripsRes, currentRes, summaryRes] = await Promise.all([
-          axios.get('http://localhost:8002/traffic/trips'),
-          axios.get('http://localhost:8002/traffic/current'),
-          axios.get('http://localhost:8002/analytics/summary')
+          axios.get('/traffic/trips'),
+          axios.get('/traffic/current'),
+          axios.get('/analytics/summary')
         ]);
         setTrips(tripsRes.data);
         setStats(currentRes.data.stats);
@@ -46,7 +46,7 @@ const App: React.FC = () => {
     setPrediction(null);
     try {
       // Mock prediction for Hinjewadi
-      const res = await axios.get('http://localhost:8002/traffic/predict?hour=18&lat=18.59&lon=73.71');
+      const res = await axios.get('/traffic/predict?hour=18&lat=18.59&lon=73.71');
       // Artificial delay for 'Scan' effect
       setTimeout(() => {
         setPrediction(res.data);

@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 import pandas as pd
 import numpy as np
 import json
@@ -89,6 +91,28 @@ def get_summary():
             "status": "Operational"
         }
     return {"error": "No stats"}
+
+# --- Unified Frontend Serving ---
+project_root = os.path.dirname(os.path.abspath(__file__))
+static_dir = os.path.join(project_root, "static")
+
+# Mount assets specifically
+if os.path.exists(os.path.join(static_dir, "assets")):
+    app.mount("/assets", StaticFiles(directory=os.path.join(static_dir, "assets")), name="assets")
+
+@app.get("/{full_path:path}")
+async def serve_react_app(full_path: str):
+    # Check if the requested path is actually a file in the static dir
+    file_path = os.path.join(static_dir, full_path)
+    if os.path.isfile(file_path):
+        return FileResponse(file_path)
+    
+    # Otherwise, fallback to index.html for SPA routing
+    index_path = os.path.join(static_dir, "index.html")
+    if os.path.exists(index_path):
+        return FileResponse(index_path)
+    
+    return {"status": "Online", "mode": "API-Only", "message": "Frontend build files not found in /static"}
 
 if __name__ == "__main__":
     import uvicorn

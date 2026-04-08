@@ -31,31 +31,25 @@ Transforming raw traffic data into actionable spatial intelligence. God's Eye us
 
 ---
 
-## 🔋 Deployment
+## 🚀 Deployment & Monorepo Architecture
 
-### 1. Neural Backend (Intelligence)
-```bash
-cd backend
-pip install -r requirements.txt
-python main.py
-```
-*Port: `8002` | Endpoint: `/traffic/predict`*
+The **God's Eye** platform is designed as a unified monorepo for seamless deployment.
 
-### 2. Control Interface (Frontend)
-```bash
-cd frontend
-npm install
-npm run dev
-```
-*Port: `5181` | Engine: MapLibre GL*
+### ⚙️ Unified Service Flow
+1.  **Orchestration**: A root `package.json` manages both frontend and backend pipelines.
+2.  **Build Phase**: The React frontend is compiled into optimized static assets.
+3.  **Deployment**: Railway builds the service using **Nixpacks**.
+4.  **Runtime**: The FastAPI backend serves the React SPA from `/static` and handles ML-driven API requests on the same port.
 
----
+> [!TIP]
+> **Technical Interview Pro-Tip:**
+> "The system is deployed as a unified full-stack service, where the FastAPI backend serves both the machine learning API and the frontend interface, eliminating cross-origin overhead and simplifying deployment."
 
-## 🔮 Prediction Logic
-The system evaluates the **Congestion Matrix** using:
-$$Score = \frac{Volume \times Complexity}{AvgSpeed + (RainFactor \times 0.5)}$$
-
-Predictions are categorized into **LOW**, **MEDIUM**, and **HIGH** alert states, displayed via the interactive Neural Predictor box in the HUD.
+### 🌐 Live Setup (Railway)
+1.  Connect your GitHub repository to **Railway**.
+2.  Railway will automatically detect the root `package.json` and `railway.json`.
+3.  The build script will compile the frontend and stage it for the backend.
+4.  Accessed via a single unified URL.
 
 ---
 

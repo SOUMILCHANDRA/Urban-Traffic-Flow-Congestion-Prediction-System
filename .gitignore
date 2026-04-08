@@ -1,5 +1,6 @@
 node_modules
 dist
+backend/static
 .env
 .env.local
 .env.development.local
@@ -15,8 +16,8 @@ __pycache__
 *.pyc
 venv
 .venv
-pune_traffic_data.csv
-pune_traffic_stats.csv
-pune_trips.json
+# Keep data for simulation
+!pune_traffic_stats.csv
+!pune_trips.json
 everything-antigravity
 .gemini

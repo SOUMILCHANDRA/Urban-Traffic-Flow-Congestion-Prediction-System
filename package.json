@@ -1,0 +1,11 @@
+{
+  "name": "gods-eye-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:frontend": "cd frontend && npm install && npm run build",
+    "postbuild:frontend": "mkdir -p backend/static && cp -v -r frontend/dist/* backend/static/",
+    "build": "npm run build:frontend && npm run postbuild:frontend",
+    "start": "cd backend && uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"
+  }
+}
