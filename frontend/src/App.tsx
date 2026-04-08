@@ -3,6 +3,8 @@ import axios from 'axios';
 import MapComponent from './components/MapComponent';
 import { Activity, Map as MapIcon, TrendingUp, Clock, Navigation, ShieldCheck } from 'lucide-react';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+
 const App: React.FC = () => {
   const [trips, setTrips] = useState([]);
   const [stats, setStats] = useState([]);
@@ -25,9 +27,9 @@ const App: React.FC = () => {
     const fetchData = async () => {
       try {
         const [tripsRes, currentRes, summaryRes] = await Promise.all([
-          axios.get('/traffic/trips'),
-          axios.get('/traffic/current'),
-          axios.get('/analytics/summary')
+          axios.get(`${API_BASE_URL}/traffic/trips`),
+          axios.get(`${API_BASE_URL}/traffic/current`),
+          axios.get(`${API_BASE_URL}/analytics/summary`)
         ]);
         setTrips(tripsRes.data);
         setStats(currentRes.data.stats);
@@ -46,7 +48,7 @@ const App: React.FC = () => {
     setPrediction(null);
     try {
       // Mock prediction for Hinjewadi
-      const res = await axios.get('/traffic/predict?hour=18&lat=18.59&lon=73.71');
+      const res = await axios.get(`${API_BASE_URL}/traffic/predict?hour=18&lat=18.59&lon=73.71`);
       // Artificial delay for 'Scan' effect
       setTimeout(() => {
         setPrediction(res.data);

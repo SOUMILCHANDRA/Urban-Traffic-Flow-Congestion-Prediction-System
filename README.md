@@ -31,25 +31,25 @@ Transforming raw traffic data into actionable spatial intelligence. God's Eye us
 
 ---
 
-## 🚀 Deployment & Monorepo Architecture
+## 🚀 Deployment Strategy (Render)
 
-The **God's Eye** platform is designed as a unified monorepo for seamless deployment.
+The **God's Eye** platform is optimized for deployment on **Render's Free Tier** using a distributed full-stack architecture.
 
-### ⚙️ Unified Service Flow
-1.  **Orchestration**: A root `package.json` manages both frontend and backend pipelines.
-2.  **Build Phase**: The React frontend is compiled into optimized static assets.
-3.  **Deployment**: Railway builds the service using **Nixpacks**.
-4.  **Runtime**: The FastAPI backend serves the React SPA from `/static` and handles ML-driven API requests on the same port.
+### ⚙️ Multi-Service Structure
+1.  **Neural Backend**: Hosted as a **Render Web Service** (FastAPI).
+2.  **Control Interface**: Hosted as a **Render Static Site** (React/Vite).
+
+### 🌐 Live Configuration
+- **Backend URL**: Set as `VITE_API_URL` environment variable in the Static Site settings.
+- **Auto-Sync**: Push to `main` to trigger automated builds for both services.
+
+> [!NOTE]
+> **Performance Disclosure:**
+> Successfully deployed using Render’s free tier. Note that the free "Web Service" may experience a short delay during first load (cold start) after periods of inactivity. This is expected behavior for free-tier infrastructure but is more than functional for portfolio demonstrations.
 
 > [!TIP]
 > **Technical Interview Pro-Tip:**
-> "The system is deployed as a unified full-stack service, where the FastAPI backend serves both the machine learning API and the frontend interface, eliminating cross-origin overhead and simplifying deployment."
-
-### 🌐 Live Setup (Railway)
-1.  Connect your GitHub repository to **Railway**.
-2.  Railway will automatically detect the root `package.json` and `railway.json`.
-3.  The build script will compile the frontend and stage it for the backend.
-4.  Accessed via a single unified URL.
+> "The system utilizes a decoupled architecture where the high-performance visualization layer is served via an optimized Static Site, while the heavy-lifting ML inference is handled by a separate FastAPI microservice. This ensures the dashboard remains responsive even during complex backend computations."
 
 ---
 
