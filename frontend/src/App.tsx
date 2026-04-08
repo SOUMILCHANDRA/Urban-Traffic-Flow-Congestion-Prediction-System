@@ -24,9 +24,9 @@ const App: React.FC = () => {
     const fetchData = async () => {
       try {
         const [tripsRes, currentRes, summaryRes] = await Promise.all([
-          axios.get('http://localhost:8000/traffic/trips'),
-          axios.get('http://localhost:8000/traffic/current'),
-          axios.get('http://localhost:8000/analytics/summary')
+          axios.get('http://localhost:8001/traffic/trips'),
+          axios.get('http://localhost:8001/traffic/current'),
+          axios.get('http://localhost:8001/analytics/summary')
         ]);
         setTrips(tripsRes.data);
         setStats(currentRes.data.stats);
@@ -43,7 +43,7 @@ const App: React.FC = () => {
   const handlePredict = async () => {
     try {
       // Mock prediction for Hinjewadi
-      const res = await axios.get('http://localhost:8000/traffic/predict?hour=18&lat=18.59&lon=73.71');
+      const res = await axios.get('http://localhost:8001/traffic/predict?hour=18&lat=18.59&lon=73.71');
       setPrediction(res.data);
     } catch (err) {
       console.error(err);
@@ -96,15 +96,19 @@ const App: React.FC = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <button className="btn-primary" style={{ width: '100%' }} onClick={handlePredict}>
-            Predict Future Traffic
-          </button>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
+            <button className="btn-primary" onClick={handlePredict}>Predict 18:00</button>
+            <button className="btn-primary" style={{ background: 'var(--danger)' }}>Rain Spike</button>
+          </div>
           
           {prediction && (
-            <div style={{ marginTop: '15px', padding: '10px', background: 'rgba(255,255,255,0.05)', borderRadius: '8px' }}>
+            <div className="prediction-box">
               <p style={{ fontSize: '0.9rem' }}>Prediction for 18:00:</p>
               <h2 style={{ fontSize: '1.2rem', margin: '5px 0' }}>{prediction.level} CONGESTION</h2>
-              <p style={{ fontSize: '0.8rem', opacity: 0.7 }}>Confidence: 89%</p>
+              <div className="confidence-meter">
+                 <div className="meter-fill" style={{ width: '89%' }}></div>
+              </div>
+              <p style={{ fontSize: '0.7rem', opacity: 0.7, marginTop: '5px' }}>Confidence: 89% | Stochastic Variance Added</p>
             </div>
           )}
         </section>
