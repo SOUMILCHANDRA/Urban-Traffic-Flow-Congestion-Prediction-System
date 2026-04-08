@@ -17,6 +17,7 @@
     "@deck.gl/layers": "^9.2.11",
     "@deck.gl/mesh-layers": "^9.2.11",
     "@deck.gl/react": "^9.2.11",
+    "@supabase/supabase-js": "^2.102.1",
     "axios": "^1.8.1",
     "deck.gl": "^9.2.11",
     "framer-motion": "^12.4.10",

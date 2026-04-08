@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import { createClient } from '@supabase/supabase-js';
 import MapComponent from './components/MapComponent';
 import { Activity, Map as MapIcon, TrendingUp, Clock, Navigation, ShieldCheck } from 'lucide-react';
+
+// Supabase Cloud Matrix Config (Hardcoded fallbacks for instant Render deployment)
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://yiqgcbxaeomocssfekbv.supabase.co';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_A10lTOtSZxWBBwagIXKLxw_whJO973g';
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || '';
 
@@ -24,22 +30,47 @@ const App: React.FC = () => {
 
   // Fetch Data
   useEffect(() => {
+    console.log("GOD'S EYE INITIALIZING...");
+    console.log("Supabase URL detected:", !!supabaseUrl);
+    console.log("Supabase Key detected:", !!supabaseAnonKey);
+    console.log("API URL:", API_BASE_URL);
+
     const fetchData = async () => {
       try {
-        const [tripsRes, currentRes, summaryRes] = await Promise.all([
-          axios.get(`${API_BASE_URL}/traffic/trips`),
-          axios.get(`${API_BASE_URL}/traffic/current`),
-          axios.get(`${API_BASE_URL}/analytics/summary`)
-        ]);
-        setTrips(tripsRes.data);
-        setStats(currentRes.data.stats);
+        // 1. Fetch from Supabase (Primary)
+        if (supabaseUrl && supabaseAnonKey) {
+          console.log("Fetching cloud pulse matrix...");
+          const [tripsRes, statsRes] = await Promise.all([
+            supabase.from('trips').select('*'),
+            supabase.from('traffic_stats').select('*')
+          ]);
+          
+          if (tripsRes.error) console.error("Trips Error:", tripsRes.error);
+          if (statsRes.error) console.error("Stats Error:", statsRes.error);
+          
+          if (!tripsRes.error && tripsRes.data) {
+            console.log(`Cloud sync successful: ${tripsRes.data.length} vehicles detected.`);
+            // Ensure path and timestamps are arrays (sometimes stringified in DB)
+            const cleanTrips = tripsRes.data.map((t: any) => ({
+              ...t,
+              path: typeof t.path === 'string' ? JSON.parse(t.path) : t.path,
+              timestamps: typeof t.timestamps === 'string' ? JSON.parse(t.timestamps) : t.timestamps
+            }));
+            setTrips(cleanTrips);
+          }
+          
+          if (!statsRes.error) setStats(statsRes.data as any);
+        }
+
+        // 2. Fetch Summary from Backend (ML Analytics)
+        const summaryRes = await axios.get(`${API_BASE_URL}/analytics/summary`);
         setSummary(summaryRes.data);
       } catch (err) {
-        console.error("Backend connection failed", err);
+        console.error("Cloud Error:", err);
       }
     };
     fetchData();
-    const interval = setInterval(fetchData, 5000); // Update stats every 5s
+    const interval = setInterval(fetchData, 10000); // 10s sync
     return () => clearInterval(interval);
   }, []);
 
