@@ -1,59 +1,65 @@
-# 🌍 God's Eye: Traffic Intelligence System
+# 👁️ GOD'S EYE | TRANSIT INTELLIGENCE CORE
 
-![God's Eye Traffic Intelligence](https://img.shields.io/badge/Status-Live%20Simulation-brightgreen)
-![Tech Stack](https://img.shields.io/badge/Stack-React%20%7C%20FastAPI%20%7C%20Deck.gl%20%7C%20ML-blue)
+![Status](https://img.shields.io/badge/Neural--Link-Active-00f2ff)
+![Tech Stack](https://img.shields.io/badge/Engine-MapLibre%20%7C%20Deck.gl-ff0055)
+![Platform](https://img.shields.io/badge/Control--Room-v2.0-blueviolet)
 
-**God's Eye** is a satellite-view urban traffic intelligence dashboard designed for Pune City. It provides a top-down, real-time-like visualization of traffic flow, predictive congestion modeling, and smart route optimization.
+**God's Eye** is a high-performance, cyber-aesthetic traffic visualization and predictive intelligence suite. Built for the Pune metropolitan region, it provides a "Mission Control" experience for urban flow analysis, leveraging GPU-accelerated rendering and machine learning.
 
-## ✨ Key Features
+---
 
-- **🛸 God's Eye View**: Immersive satellite-style dark map visualization using Mapbox GL.
-- **🚗 Live-Like Animated Flow**: Uses `Deck.gl TripsLayer` to animate moving particles representing vehicles on Pune's major roads.
-- **🔥 Congestion Heatmap**: Dynamic heatmap overlay that identifies volume density and hotspots.
-- **🧠 Predictive AI**: Machine Learning (Random Forest) models that predict future traffic levels based on time, day, and location.
-- **🛰️ Time Matrix**: Interactive time slider allowing users to scrub through past, present, and predicted future traffic states.
-- **🛣️ Route Optimization**: Real-time suggestions for the fastest vs. least congested routes.
+## 🌌 The Vision
+Transforming raw traffic data into actionable spatial intelligence. God's Eye uses a tech-noir aesthetic combined with professional-grade data layers to visualize the heartbeat of the city.
 
-## 🛠️ Tech Stack
+### 🚀 Core Intelligence
+- **🦾 Cyber HUD Interface**: A custom-built mission control dashboard using glassmorphism, scanline overlays, and neon neon-glow accents.
+- **🛸 Neural Predictor**: Real-time traffic forecasting using a **Random Forest Regressor** to scan municipal sectors for future bottlenecks.
+- **🔥 Kinetic Flow Visualization**: High-performance `TripsLayer` rendering with additive blending for soul-like neon vehicle trails.
+- **🛰️ Temporal Matrix**: Scrub through time using a unified temporal slider to see past trends and future AI-generated projections.
+- **🔀 Dynamic Diversion Engine**: Real-time logic for calculating delta values between primary and alternative transit routes.
 
-- **Frontend**: React (Vite), Deck.gl, Mapbox GL JS, Framer Motion, Lucide Icons.
-- **Backend**: Python, FastAPI, Pandas, Scikit-learn (Random Forest).
-- **Data**: Simulated streaming pipeline using historical Pune traffic patterns with stochastic variation.
+---
 
-## 🚀 Quick Start
+## 🛠️ Technical Architecture
 
-### 1. Prerequisites
-- Python 3.10+
-- Node.js 18+
-- Mapbox Access Token (Add to `frontend/.env`)
+- **Map Engine**: **MapLibre GL** (Token-free, open-source high-performance rendering).
+- **Visualization**: **Deck.gl v9** (GPU-accelerated layers for millions of data points).
+- **Frontend**: React (Vite 8.0), Framer Motion (Adaptive animations), Lucide (HUD icons).
+- **Backend**: FastAPI (Python 3.10+), Scikit-Learn (Predictive models), Pandas (Data pipelines).
 
-### 2. Backend Setup
+---
+
+## 🔋 Deployment
+
+### 1. Neural Backend (Intelligence)
 ```bash
 cd backend
-py -m pip install -r requirements.txt
-py main.py
+pip install -r requirements.txt
+python main.py
 ```
-*The API will be available at `http://localhost:8001`*
+*Port: `8002` | Endpoint: `/traffic/predict`*
 
-### 3. Frontend Setup
+### 2. Control Interface (Frontend)
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-*The Dashboard will be available at `http://localhost:5173`*
-
-## 🔮 Prediction Logic
-The system uses a **Congestion Score** formula:
-`Score = Traffic Volume / (Avg Speed + 1)`
-
-Predictions are classified into **LOW**, **MEDIUM**, and **HIGH** using a trained Random Forest Regressor, providing city-scale intelligence for urban planning and personal travel.
-
-## 🏁 Final Deliverables
-- [x] Interactive 3D Web Dashboard
-- [x] Animated Traffic Simulation
-- [x] ML Prediction System
-- [x] Route Recommendation Engine
+*Port: `5181` | Engine: MapLibre GL*
 
 ---
-Built with ❤️ by SOUMIL CHANDRA & Antigravity AI
+
+## 🔮 Prediction Logic
+The system evaluates the **Congestion Matrix** using:
+$$Score = \frac{Volume \times Complexity}{AvgSpeed + (RainFactor \times 0.5)}$$
+
+Predictions are categorized into **LOW**, **MEDIUM**, and **HIGH** alert states, displayed via the interactive Neural Predictor box in the HUD.
+
+---
+
+### 📡 Data Source
+Simulated via a stochastic urban mobility generator, mirroring Pune's topology and traffic density patterns. No API keys required.
+
+---
+**OPERATIONAL STATUS: READY**
+*Developed by SOUMIL CHANDRA & Antigravity AI*
