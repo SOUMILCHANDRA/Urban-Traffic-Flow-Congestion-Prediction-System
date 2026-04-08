@@ -1,12 +1,16 @@
 :root {
   --primary: #00f2ff;
+  --primary-glow: rgba(0, 242, 255, 0.5);
   --secondary: #7000ff;
-  --bg: #030816;
-  --panel-bg: rgba(10, 20, 40, 0.7);
+  --bg: #010409;
+  --panel-bg: rgba(6, 11, 20, 0.85);
   --text: #e0e6ed;
-  --danger: #ff3e3e;
-  --warning: #ffcc00;
+  --text-dim: #8b949e;
+  --danger: #ff2e2e;
+  --danger-glow: rgba(255, 46, 46, 0.5);
+  --warning: #ffb800;
   --success: #00ff88;
+  --accent-border: rgba(0, 242, 255, 0.2);
 }
 
 * {
@@ -34,18 +38,65 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+  background-color: #000;
+}
+
+.map-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 1px,
+    rgba(0, 242, 255, 0.01) 2px
+  );
+  pointer-events: none;
+  z-index: 5;
 }
 
 /* Glass Panels */
 .panel {
   position: absolute;
   background: var(--panel-bg);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--accent-border);
+  border-radius: 4px; /* More angular tech feel */
+  padding: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 242, 255, 0.05);
   z-index: 10;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.panel:hover {
+  border-color: var(--primary);
+  box-shadow: 0 10px 50px rgba(0, 242, 255, 0.15), inset 0 0 30px rgba(0, 242, 255, 0.08);
+}
+
+/* Panel Corner Accents */
+.panel::before, .panel::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--primary);
+  border-style: solid;
+  pointer-events: none;
+}
+
+.panel::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+
+.panel::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
 }
 
 .top-left-panel {
@@ -77,10 +128,14 @@ body {
 
 /* Typography */
 h1, h2, h3 {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  font-family: 'Outfit', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, #fff, var(--primary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 8px var(--primary-glow));
 }
 
 .stat-item {
@@ -123,22 +178,31 @@ h1, h2, h3 {
 input[type="range"] {
   width: 100%;
   accent-color: var(--primary);
+  background: rgba(255, 255, 255, 0.1);
+  height: 4px;
+  border-radius: 2px;
+  cursor: pointer;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 6px;
+  background: rgba(0, 242, 255, 0.1);
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 12px 24px;
+  border-radius: 4px;
   cursor: pointer;
   font-weight: 600;
-  transition: transform 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+  box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.1);
+  background: var(--primary);
+  color: #000;
+  box-shadow: 0 0 25px var(--primary-glow);
+  transform: translateY(-1px);
 }
 
 .search-input {
@@ -155,22 +219,244 @@ input[type="range"] {
   margin-top: 15px;
   padding: 15px;
   background: rgba(0, 242, 255, 0.05);
-  border: 1px solid rgba(0, 242, 255, 0.2);
-  border-radius: 10px;
+  border: 1px solid var(--accent-border);
+  border-radius: 4px;
   position: relative;
   overflow: hidden;
 }
 
-.confidence-meter {
-  height: 4px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
-  margin: 10px 0;
+.prediction-box.animate-slide-in {
+  animation: slideIn 0.5s ease-out;
 }
 
-.meter-fill {
+@keyframes slideIn {
+  from { transform: translateX(20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.prediction-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.tag {
+  font-size: 0.6rem;
+  color: var(--primary);
+  letter-spacing: 1px;
+}
+
+.confidence {
+  font-size: 0.6rem;
+  color: var(--text-dim);
+}
+
+.scanning-line {
+  height: 2px;
+  background: var(--primary);
+  width: 100%;
+  margin: 10px 0;
+  box-shadow: 0 0 15px var(--primary-glow);
+  animation: scan 1.5s infinite linear;
+}
+
+@keyframes scan {
+  0% { opacity: 0.2; transform: scaleX(0.1); }
+  50% { opacity: 1; transform: scaleX(1); }
+  100% { opacity: 0.2; transform: scaleX(0.1); }
+}
+
+.prediction-box h2 {
+  font-size: 1.1rem;
+  margin: 10px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.prediction-box h2.high { color: var(--danger); text-shadow: 0 0 10px var(--danger-glow); }
+.prediction-box h2.medium { color: var(--warning); }
+.prediction-box h2.low { color: var(--success); }
+
+.prediction-details p {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  line-height: 1.4;
+}
+
+.progress-container {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-top: 10px;
+}
+
+.progress-bar {
   height: 100%;
   background: var(--primary);
   box-shadow: 0 0 10px var(--primary);
-  border-radius: 2px;
+}
+
+/* Specific Component Styles */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 24px;
+}
+
+.brand-icon {
+  color: var(--primary);
+  filter: drop-shadow(0 0 8px var(--primary-glow));
+}
+
+.subtitle {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  margin-top: -8px;
+}
+
+.stat-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.stat-status {
+  color: var(--success);
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.3);
+}
+
+.analytics-card {
+  background: rgba(255,255,255,0.03);
+  padding: 15px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.stat-pair {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.stat-pair .label { font-size: 0.7rem; color: var(--text-dim); }
+.stat-pair .value { font-weight: bold; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding-bottom: 8px;
+}
+
+.section-header h3 { margin: 0; font-size: 0.9rem; }
+
+.helper-text { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 15px; }
+
+.action-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.btn-danger {
+  background: rgba(255, 46, 46, 0.1);
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  padding: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.btn-danger:hover {
+  background: var(--danger);
+  color: #fff;
+  box-shadow: 0 0 20px var(--danger-glow);
+}
+
+.time-display {
+  padding: 20px;
+  background: rgba(0,0,0,0.4);
+  border-radius: 4px;
+  margin-bottom: 15px;
+  text-align: center;
+  border: 1px solid rgba(0, 242, 255, 0.1);
+}
+
+.digital-clock {
+  font-family: 'monospace';
+  font-size: 2rem;
+  display: block;
+  color: var(--primary);
+  text-shadow: 0 0 15px var(--primary-glow);
+}
+
+.date { font-size: 0.7rem; color: var(--text-dim); letter-spacing: 3px; }
+
+.route-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.badge {
+  font-size: 0.6rem;
+  background: var(--primary);
+  color: #000;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: bold;
+  animation: pulse 2s infinite;
+}
+
+.route-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.route-card {
+  padding: 15px;
+  background: rgba(255,255,255,0.03);
+  border-left: 3px solid var(--text-dim);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.route-card.active {
+  background: rgba(0, 255, 136, 0.05);
+  border-color: var(--success);
+}
+
+.route-label { font-size: 0.6rem; color: var(--text-dim); display: block; }
+.route-name { font-size: 0.9rem; font-weight: bold; }
+.route-delta { font-size: 0.8rem; font-weight: bold; color: var(--success); }
+
+/* HUD Effects */
+.hud-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.4) 100%);
+  z-index: 1;
+}
+
+.cyan-range {
+  height: 6px;
+  -webkit-appearance: none;
+  background: rgba(0, 242, 255, 0.1);
+  border-radius: 5px;
+  outline: none;
 }

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import Map from 'react-map-gl';
+import React, { useState } from 'react';
+import Map from 'react-map-gl/maplibre';
 import DeckGL from '@deck.gl/react';
 import { TripsLayer } from '@deck.gl/geo-layers';
 import { HeatmapLayer } from '@deck.gl/aggregation-layers';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
-const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
+// No token needed for MapLibre with Carto/OpenStreetMap tiles
 
 interface MapComponentProps {
   trips: any[];
@@ -27,27 +28,37 @@ const MapComponent: React.FC<MapComponentProps> = ({ trips, stats, time }) => {
       data: trips,
       getPath: (d: any) => d.path,
       getTimestamps: (d: any) => d.timestamps,
-      getColor: (d: any) => (d.vendor === 0 ? [0, 242, 255] : d.vendor === 1 ? [112, 0, 255] : [255, 62, 62]),
-      opacity: 0.8,
-      widthMinPixels: 3,
+      getColor: (d: any) => {
+        // Neon palette based on traffic status or vendor
+        const status = d.status || 'LOW';
+        if (status === 'HIGH') return [255, 30, 30, 255]; // Pulsing Neon Red
+        if (status === 'MEDIUM') return [255, 180, 0, 255]; // Vivid Orange
+        return [0, 255, 230, 255]; // Cyber Cyan
+      },
+      opacity: 0.9,
+      widthMinPixels: 4,
       rounded: true,
       fadeTrail: true,
-      trailLength: 100,
+      trailLength: 120, // Longer trails for motion blur feel
       currentTime: time,
-      shadowEnabled: false
+      shadowEnabled: false,
+      parameters: {
+        blendFunc: [770, 1] // Additive blending for neon glow
+      }
     }),
     new HeatmapLayer({
       id: 'heatmap-layer',
       data: stats,
       getPosition: (d: any) => [d.lon, d.lat],
       getWeight: (d: any) => d.congestion_score,
-      radiusPixels: 60,
-      intensity: 1,
-      threshold: 0.1,
+      radiusPixels: 80,
+      intensity: 1.5,
+      threshold: 0.05,
       colorRange: [
-        [0, 255, 136],
-        [255, 204, 0],
-        [255, 62, 62]
+        [0, 255, 136, 0],
+        [0, 255, 230, 100],
+        [255, 180, 0, 150],
+        [255, 30, 30, 200]
       ]
     })
   ];
@@ -59,10 +70,12 @@ const MapComponent: React.FC<MapComponentProps> = ({ trips, stats, time }) => {
         onViewStateChange={(e: any) => setViewState(e.viewState)}
         controller={true}
         layers={layers}
+        parameters={{
+          clearColor: [0, 0, 0, 1] // Pure black background
+        }}
       >
         <Map
-          mapboxAccessToken={MAPBOX_TOKEN}
-          mapStyle="mapbox://styles/mapbox/satellite-v9"
+          mapStyle="https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json"
         />
       </DeckGL>
     </div>

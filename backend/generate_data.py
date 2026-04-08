@@ -54,10 +54,17 @@ def generate_trips(num_trips=200):
         
         timestamps = [start_time + (duration * (i / len(full_path))) for i in range(len(full_path))]
         
+        # Assign status based on random congestion logic
+        congestion_rand = random.random()
+        status = "LOW"
+        if congestion_rand > 0.8: status = "HIGH"
+        elif congestion_rand > 0.5: status = "MEDIUM"
+        
         trips.append({
             "path": full_path,
             "timestamps": timestamps,
-            "vendor": random.randint(0, 2) # Different colors/types
+            "vendor": random.randint(0, 2),
+            "status": status
         })
         
     with open("pune_trips.json", "w") as f:
