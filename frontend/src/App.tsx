@@ -24,9 +24,9 @@ const App: React.FC = () => {
     const fetchData = async () => {
       try {
         const [tripsRes, currentRes, summaryRes] = await Promise.all([
-          axios.get('http://localhost:8001/traffic/trips'),
-          axios.get('http://localhost:8001/traffic/current'),
-          axios.get('http://localhost:8001/analytics/summary')
+          axios.get('http://localhost:8002/traffic/trips'),
+          axios.get('http://localhost:8002/traffic/current'),
+          axios.get('http://localhost:8002/analytics/summary')
         ]);
         setTrips(tripsRes.data);
         setStats(currentRes.data.stats);
@@ -43,7 +43,7 @@ const App: React.FC = () => {
   const handlePredict = async () => {
     try {
       // Mock prediction for Hinjewadi
-      const res = await axios.get('http://localhost:8001/traffic/predict?hour=18&lat=18.59&lon=73.71');
+      const res = await axios.get('http://localhost:8002/traffic/predict?hour=18&lat=18.59&lon=73.71');
       setPrediction(res.data);
     } catch (err) {
       console.error(err);
